@@ -38,6 +38,7 @@ public class LoadTriggerController {
         JobParameter param1 =  new JobParameter(new Date());
 		props.put("now",param1);
 		JobParameters parameters = new JobParameters(props );
+		System.out.println(launcher);
         JobExecution jobExecution = launcher.run(job, parameters);
 
         LOGGER.info("JobExecution: " + jobExecution.getStatus());

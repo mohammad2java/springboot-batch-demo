@@ -62,3 +62,37 @@ Architecture:
 `http://localhost:8080/load` - trigger load process.<br>
 `http://localhost:8080/h2-console` - getting to H2 database.<br>
 
+
+
+
+API DOCS
+---------------
+	   after architecture understanding lets us deep drive about important(base) api(interface or classes)
+	 
+	 1) Base interfaces of batch
+	  -------------------------- 
+	  Job,Step,ItemReader,ItemProcessor,ItemWriter,JobLauncher
+   
+     2) Base Classes:
+     StepBuilderFactory,JobBuilderFactory ..etc
+     
+     Notes:
+     1) by-default Springboot created bean for JobLauncher instance of SimpleJobLauncher and StepBuilderFactory,JobBuilderFactory
+     2) using StepBuilderFactory we can create object of Step Interface
+     3) using JobBuilderFactory we can create object of Job Interface
+     4) using JobLauncher we can run job manually.
+     5) ItemReader IMPL classes would be based on source data type, it is very importance 
+     because item reader is going to decide how data will be fetch from source.
+    
+     example:
+     public JdbcCursorItemReader<Student> reader() {
+        JdbcCursorItemReader<Student> reader = new JdbcCursorItemReader<>();
+        reader.setDataSource(dataSource); 
+        reader.setSql("select id, roll_number, name from student");
+        reader.setRowMapper(new StudentResultRowMapper());
+        reader.setMaxRows(10); //setting max row fetching in one hit
+        reader.setFetchSize(10); //
+        reader.setQueryTimeout(10000);
+        return reader;
+    }
+    

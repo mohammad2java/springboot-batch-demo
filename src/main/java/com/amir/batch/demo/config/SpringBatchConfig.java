@@ -31,12 +31,12 @@ public class SpringBatchConfig {
 
   @Bean
   public Job job(ItemProcessor<User, User> itemProcessor, ItemWriter<User> itemWriter) {
-    Step step = stepBuilderFactory.get("load_example_step_name").<User, User>chunk(2)
+    Step step = stepBuilderFactory.get("step1").<User, User>chunk(2)
         .reader(itemReader()).processor(itemProcessor).writer(itemWriter).build();
-
-    return jobBuilderFactory.get("load_example_job_name").incrementer(new RunIdIncrementer())
-        // can be added more than one step.
+     Job job = jobBuilderFactory.get("job1").incrementer(new RunIdIncrementer())
         .start(step).build();
+     return job;
+    
   }
 
   @Bean
